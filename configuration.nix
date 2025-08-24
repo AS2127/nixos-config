@@ -24,8 +24,8 @@
 	# networking configuration
 	networking = {
 		hostName = "nixos";
-		#wireless.enable = true;
 		networkmanager.enable = true;
+		# wireless.enable = true; DOES NOT WORK (with KDE?)
 	};
 
 	# enables support for broadcom wireless chips
