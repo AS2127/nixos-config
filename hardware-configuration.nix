@@ -3,7 +3,7 @@
 	imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
 	boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-	boot.kernelModules = [ "kvm-intel" "wl" ];
+	boot.kernelModules = [ "kvm-intel" "wl" /* "b43" */ ];
 	boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
 	fileSystems."/" = {
@@ -19,7 +19,7 @@
 
 	swapDevices = [ { device = "/dev/disk/by-uuid/cb46259b-0bce-4cac-8056-090c98421352"; } ];
 
-	networking.useDHCP = lib.mkDefault true;
+	#networking.useDHCP = lib.mkDefault true;
 
 	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 	hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

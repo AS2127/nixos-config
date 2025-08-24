@@ -2,6 +2,9 @@
 	imports = [ ./hardware-configuration.nix ];
 
 	nixpkgs.config.allowUnfree = true; # allow closed source software
+	 nixpkgs.config.permittedInsecurePackages = [
+                "broadcom-sta-6.30.223.271-57-6.12.42"
+              ];
 
 	# enable nix commands flakes
 	nix.settings = {
@@ -21,9 +24,8 @@
 	# networking configuration
 	networking = {
 		hostName = "nixos";
-		wireless.enable = false;
+		#wireless.enable = true;
 		networkmanager.enable = true;
-		enableB43Firmware = true;
 	};
 
 	# enables support for broadcom wireless chips
@@ -31,7 +33,6 @@
 		kernelModules = [
 			"kvm-intel" # enables hardware virtualization on intel cpus
 			"wl" # proprietary driver for broadcom wireless chips
-			"b43" # open source driver for legacy broadcom wireless chips
 		];
 		extraModulePackages = with config.boot.kernelPackages; [
 			apfs # provides readonly support for apple filesystems on linux
