@@ -4,6 +4,11 @@
 		homeDirectory = "/home/aryan";
 	};
 
+	wayland.windowManager.hyprland = {
+		enable = true;
+		extraConfig = builtins.readFile ./hyprland.conf;
+	};
+
 	# packages installed at the user level (https://search.nixos.org/packages)
 	home.packages = with pkgs; [
 		btop
@@ -11,7 +16,7 @@
 		fastfetch
 		google-chrome
 	];
-
+	programs.ghostty.enable = true;
 	programs.firefox.enable = true;
 
 	programs.git = {
