@@ -1,9 +1,14 @@
 { config, pkgs, ... }: {
 	imports = [ ./hardware-configuration.nix ];
 
-	nix.channel.enable = false;
+
+	nix = {
+		channel.enable = false;
+		settings.auto-optimise-store = true;
+	};
 	nixpkgs.config.allowUnfree = true; # allow closed source software
 	nixpkgs.config.permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-57-6.12.42" ];
+
 
 	# enable nix commands flakes
 	nix.settings = {
@@ -43,21 +48,29 @@
 	users.users.aryan = {
 		isNormalUser = true;
 		description = "Aryan";
-		extraGroups = [ "networkmanager" "wheel" ];
+		extraGroups = [ "networkmanager" "wheel" "video" ];
 		shell = pkgs.fish;
 	};
 	programs.fish.enable = true;
 
 	# packages installed at the system level
-	environment.systemPackages = with pkgs; [ git ];
+	environment.systemPackages = with pkgs; [ git vim kdePackages.kwallet kdePackages.kwalletmanager ];
 
-	# enable kde plasma and sddm login manager
-	services.displayManager.sddm.enable = true;
+	# enable sddm login manager with kde plasma and hyprland
+	services.displayManager.sddm = {
+		enable = true;
+		wayland.enable = true;
+	};
 	services.desktopManager.plasma6.enable = true;
+	programs.hyprland.enable = true;
+	#services.network-manager-applet.enable = true;
 
 	# Enable sound with pipewire.
 	# services.pulseaudio.enable = false;
 	security.rtkit.enable = true;
+	security.pam.services.hyprland = {
+	 kwallet.enable = true;
+	};
 	services.pipewire = {
 		enable = true;
 		alsa.enable = true;
@@ -82,3 +95,4 @@
 
 	system.stateVersion = "25.05";
 }
+

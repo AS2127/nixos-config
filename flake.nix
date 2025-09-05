@@ -8,9 +8,14 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		neovim = {
+			url = "github:lotgenoot141/neovim-config";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = inputs @ { nixpkgs, home-manager, ... }: {
+	outputs = inputs @ { nixpkgs, home-manager, neovim, ... }: {
 		nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs; };

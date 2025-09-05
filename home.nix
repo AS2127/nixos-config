@@ -1,7 +1,13 @@
 { pkgs, inputs, ... }: {
+	imports = [ inputs.neovim.homeModules.default ];
+
 	home = {
 		username = "aryan";
 		homeDirectory = "/home/aryan";
+	};
+
+	neovim = {
+		enable = true;
 	};
 
 	wayland.windowManager.hyprland = {
@@ -9,15 +15,26 @@
 		extraConfig = builtins.readFile ./hyprland.conf;
 	};
 
+	xdg.configFile."waybar/config.jsonc".source = ./waybar.jsonc;
+
 	# packages installed at the user level (https://search.nixos.org/packages)
 	home.packages = with pkgs; [
 		btop
 		discord-canary
 		fastfetch
 		google-chrome
+		brightnessctl
+		wasistlos
+		waybar
 	];
+
 	programs.ghostty.enable = true;
+
 	programs.firefox.enable = true;
+
+	services.hyprpaper.enable = true;
+	services.mako.enable = true;
+	services.network-manager-applet.enable = true;
 
 	programs.git = {
 		enable = true;
@@ -38,8 +55,6 @@
 			ff = "fastfetch";
 		};
 	};
-
-	programs.neovim.enable = true;
 
 	home.stateVersion = "24.11";
 }
