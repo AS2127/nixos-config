@@ -14,18 +14,31 @@
 		enable = true;
 		extraConfig = builtins.readFile ./hyprland.conf;
 	};
-
-	xdg.configFile."waybar/config.jsonc".source = ./waybar.jsonc;
+	
+	gtk.enable = true;
 
 	# packages installed at the user level (https://search.nixos.org/packages)
+	# *bluez-utils
 	home.packages = with pkgs; [
+		bluez-tools
+		fzf
 		btop
 		discord-canary
 		fastfetch
 		google-chrome
 		brightnessctl
 		wasistlos
-		waybar
+		inputs.waybar.packages.${pkgs.stdenv.hostPlatform.system}.waybar
+		vscode
+		tree
+		bluez
+		grim
+		slurp
+		swappy
+		wofi
+		networkmanager_dmenu
+		hyprpaper
+		inputs.clipse-gui.packages.${pkgs.system}.default
 	];
 
 	programs.ghostty.enable = true;

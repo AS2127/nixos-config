@@ -54,7 +54,7 @@
 	programs.fish.enable = true;
 
 	# packages installed at the system level
-	environment.systemPackages = with pkgs; [ git vim kdePackages.kwallet kdePackages.kwalletmanager ];
+	environment.systemPackages = with pkgs; [ git vim kdePackages.kwallet kdePackages.kwalletmanager wl-clipboard clipse];
 
 	# enable sddm login manager with kde plasma and hyprland
 	services.displayManager.sddm = {
@@ -69,7 +69,7 @@
 	# services.pulseaudio.enable = false;
 	security.rtkit.enable = true;
 	security.pam.services.hyprland = {
-	 kwallet.enable = true;
+		kwallet.enable = true;
 	};
 	services.pipewire = {
 		enable = true;
@@ -77,6 +77,7 @@
 		alsa.support32Bit = true;
 		pulse.enable = true;
 		jack.enable = true;
+		wireplumber.enable = true;
 	};
 
 	# miscellaneous configuration
@@ -91,7 +92,7 @@
 	services.tlp.enable = false; # kde plasma uses ppd, a tlp alternative
 
 	# install fonts
-	fonts.packages = with pkgs; [ noto-fonts jetbrains-mono ];
+	fonts.packages = with pkgs; [ noto-fonts jetbrains-mono font-awesome nerd-fonts._0xproto ];
 
 	system.stateVersion = "25.05";
 }

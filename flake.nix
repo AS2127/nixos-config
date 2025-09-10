@@ -13,6 +13,17 @@
 			url = "github:lotgenoot141/neovim-config";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		waybar = {
+			url = "github:Alexays/Waybar/0.13.0";
+			# inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+		clipse-gui = {
+		url = "path:./clipse-gui";
+		inputs.nixpkgs.follows = "nixpkgs";
+
+		};
 	};
 
 	outputs = inputs @ { nixpkgs, home-manager, neovim, ... }: {
@@ -31,3 +42,5 @@
 		};
 	};
 }
+
+
