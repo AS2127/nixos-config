@@ -7,8 +7,8 @@
 		settings.auto-optimise-store = true;
 	};
 	nixpkgs.config.allowUnfree = true; # allow closed source software
-	nixpkgs.config.permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-57-6.12.42" ];
-
+	nixpkgs.config.permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-57-6.12.42" "broadcom-sta-6.30.223.271-57-6.12.51" "broadcom-sta-6.30.223.271-57-6.12.54" "broadcom-sta-6.30.223.271-57-6.12.55" ];
+	nixpkgs.config.allowBroken = true;
 
 	# enable nix commands flakes
 	nix.settings = {
@@ -30,6 +30,11 @@
 		hostName = "nixos";
 		networkmanager.enable = true;
 		# wireless.enable = true; DOES NOT WORK (with KDE?)
+	};
+
+	hardware.bluetooth = {
+		enable = true;
+		powerOnBoot = true;
 	};
 
 	# enables support for broadcom wireless chips
@@ -54,23 +59,30 @@
 	programs.fish.enable = true;
 
 	# packages installed at the system level
-	environment.systemPackages = with pkgs; [ git vim kdePackages.kwallet kdePackages.kwalletmanager wl-clipboard clipse];
+	environment.systemPackages = with pkgs; [ firefox git vim wl-clipboard clipse gnome-keyring nautilus];
 
 	# enable sddm login manager with kde plasma and hyprland
-	services.displayManager.sddm = {
+	#services.displayManager.sddm = {
+	#	enable = true;
+	#	wayland.enable = true;
+	#};
+	services.xserver.displayManager.gdm = {
 		enable = true;
-		wayland.enable = true;
+		wayland = true;
 	};
-	services.desktopManager.plasma6.enable = true;
+#	services.desktopManager.plasma6.enable = true;
+	#services.xserver.displayManager.gdm.enable = true;
 	programs.hyprland.enable = true;
-	#services.network-manager-applet.enable = true;
-
+	services.upower.enable = true;
+	services.power-profiles-daemon.enable = true;
 	# Enable sound with pipewire.
 	# services.pulseaudio.enable = false;
 	security.rtkit.enable = true;
-	security.pam.services.hyprland = {
-		kwallet.enable = true;
-	};
+	#security.pam.services.hyprland = {
+		#kwallet.enable = true;
+	#};
+	services.blueman.enable = false;
+	security.polkit.enable = true;
 	services.pipewire = {
 		enable = true;
 		alsa.enable = true;
@@ -92,7 +104,7 @@
 	services.tlp.enable = false; # kde plasma uses ppd, a tlp alternative
 
 	# install fonts
-	fonts.packages = with pkgs; [ noto-fonts jetbrains-mono font-awesome nerd-fonts._0xproto ];
+	fonts.packages = with pkgs; [ noto-fonts jetbrains-mono font-awesome nerd-fonts._0xproto material-icons nerd-fonts.fira-code ];
 
 	system.stateVersion = "25.05";
 }
