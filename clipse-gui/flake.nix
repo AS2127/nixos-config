@@ -22,7 +22,7 @@
 					src = clipse-gui;
 
 					nativeBuildInputs = with pkgs; [
-						wrapGAppsHook
+						wrapGAppsHook3
 						makeWrapper
 					];
 

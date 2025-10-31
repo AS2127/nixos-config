@@ -1,7 +1,9 @@
 { pkgs, inputs, lib, ... }: {
 	imports = [
-		inputs.neovim.homeModules.default
-	#	inputs.matshell.homeManagerModules.default
+		# inputs.matshell.homeManagerModules.default
+		./neovim
+		./hyprland
+		./waybar
 	];
 
 	home = {
@@ -11,11 +13,6 @@
 
 	neovim = {
 		enable = true;
-	};
-
-	wayland.windowManager.hyprland = {
-		enable = true;
-		extraConfig = builtins.readFile ./hyprland.conf;
 	};
 
 	xdg.enable = true;
@@ -38,8 +35,6 @@
 		platformTheme.name = "gtk";
 		#platformTheme.name = "qtct";
 	};
-	
-
 
 	# packages installed at the user level (https://search.nixos.org/packages)
 	# *bluez-utils
@@ -54,7 +49,7 @@
 		google-chrome
 		brightnessctl
 		wasistlos
-		inputs.waybar.packages.${pkgs.stdenv.hostPlatform.system}.waybar
+		# inputs.waybar.packages.${pkgs.stdenv.hostPlatform.system}.waybar
 		vscode
 		tree
 		bluez
@@ -103,8 +98,10 @@
 
 	programs.git = {
 		enable = true;
-		userName = "AS2127";
-		userEmail = "s303557@gmail.com";
+		settings.user = {
+			name = "AS2127";
+			email = "s303557@gmail.com";
+		};
 	};
 
 	programs.gh = {
@@ -123,5 +120,5 @@
 	};
 	programs.man.enable = false;
 	fonts.fontconfig.enable = false;
-	home.stateVersion = "24.11";
+	home.stateVersion = "25.05";
 }
