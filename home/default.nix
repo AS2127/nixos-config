@@ -44,7 +44,7 @@
 		bluez-tools
 		fzf
 		btop
-		discord-canary
+		vesktop
 		fastfetch
 		google-chrome
 		brightnessctl
@@ -69,6 +69,13 @@
 		bitwarden-desktop
 		seahorse
 		libsecret
+		tor-browser
+		flatpak
+		foot
+		starship
+		matugen
+		pavucontrol
+
 	];
 
 

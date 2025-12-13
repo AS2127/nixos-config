@@ -1,13 +1,12 @@
 { config, pkgs, ... }: {
 	imports = [ ./hardware-configuration.nix ];
 
-
 	nix = {
 		channel.enable = false;
 		settings.auto-optimise-store = true;
 	};
+
 	nixpkgs.config.allowUnfree = true; # allow closed source software
-	nixpkgs.config.permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-57-6.12.42" "broadcom-sta-6.30.223.271-57-6.12.51" "broadcom-sta-6.30.223.271-57-6.12.54" "broadcom-sta-6.30.223.271-57-6.12.55" ];
 	nixpkgs.config.allowBroken = true;
 
 	# enable nix commands flakes
@@ -24,10 +23,9 @@
 		grub.device = "nodev";
 	};
 
-
 	# networking configuration
 	networking = {
-		hostName = "nixos";
+		hostName = "nixos-desktop";
 		networkmanager.enable = true;
 		# wireless.enable = true; DOES NOT WORK (with KDE?)
 	};
@@ -35,18 +33,6 @@
 	hardware.bluetooth = {
 		enable = true;
 		powerOnBoot = true;
-	};
-
-	# enables support for broadcom wireless chips
-	boot = {
-		kernelModules = [
-			"kvm-intel" # enables hardware virtualization on intel cpus
-			"wl" # proprietary driver for broadcom wireless chips
-		];
-		extraModulePackages = with config.boot.kernelPackages; [
-			apfs # provides readonly support for apple filesystems on linux
-			broadcom_sta # proprietary driver for broadcom wireless chips
-		];
 	};
 
 	# user configuration
@@ -59,7 +45,7 @@
 	programs.fish.enable = true;
 
 	# packages installed at the system level
-	environment.systemPackages = with pkgs; [ firefox git vim wl-clipboard clipse gnome-keyring nautilus];
+	environment.systemPackages = with pkgs; [ firefox git vim wl-clipboard clipse gnome-keyring nautilus ];
 
 	# enable sddm login manager with kde plasma and hyprland
 	#services.displayManager.sddm = {
@@ -70,17 +56,14 @@
 		enable = true;
 		wayland = true;
 	};
-#	services.desktopManager.plasma6.enable = true;
-	#services.xserver.displayManager.gdm.enable = true;
+	# services.desktopManager.plasma6.enable = true;
+	# services.xserver.displayManager.gdm.enable = true;
 	programs.hyprland.enable = true;
 	services.upower.enable = true;
 	services.power-profiles-daemon.enable = true;
 	# Enable sound with pipewire.
 	# services.pulseaudio.enable = false;
 	security.rtkit.enable = true;
-	#security.pam.services.hyprland = {
-		#kwallet.enable = true;
-	#};
 	services.blueman.enable = false;
 	security.polkit.enable = true;
 	services.pipewire = {
@@ -98,14 +81,9 @@
 	services.printing.enable = true;
 	programs.gnupg.agent.enable = true;
 
-	# laptop specific configuration (https://nixos.wiki/wiki/Laptop)
-	powerManagement.enable = true;
-	services.thermald.enable = true;
-	services.tlp.enable = false; # kde plasma uses ppd, a tlp alternative
-
 	# install fonts
-	fonts.packages = with pkgs; [ noto-fonts jetbrains-mono font-awesome nerd-fonts._0xproto material-icons nerd-fonts.fira-code ];
+	fonts.packages = with pkgs; [ noto-fonts jetbrains-mono font-awesome nerd-fonts._0xproto material-icons nerd-fonts.fira-code nerd-fonts.dejavu-sans-mono dejavu_fonts];
 
-	system.stateVersion = "25.05";
+	system.stateVersion = "25.11";
 }
 
