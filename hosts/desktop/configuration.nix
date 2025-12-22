@@ -1,89 +1,96 @@
 { config, pkgs, ... }: {
-	imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ];
 
-	nix = {
-		channel.enable = false;
-		settings.auto-optimise-store = true;
-	};
+  # Nix settings
+  nix = {
+    channel.enable = false;
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "@wheel" ];
+      auto-optimise-store = true;
+    };
+  };
 
-	nixpkgs.config.allowUnfree = true; # allow closed source software
-	nixpkgs.config.allowBroken = true;
+  nixpkgs.config.allowUnfree = true;
 
-	# enable nix commands flakes
-	nix.settings = {
-		experimental-features = [ "nix-command" "flakes" ];
-		trusted-users = [ "root" "@wheel" ];
-	};
+  # Bootloader (GRUB for dual boot)
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      efiSupport = true;
+      useOSProber = true;
+      device = "nodev";
+    };
+  };
 
+  # Networking
+  networking = {
+    hostName = "nixos-desktop";
+    networkmanager.enable = true;
+  };
 
-	# boot configuration
-	boot.loader = {
-		efi.canTouchEfiVariables = true;
-		grub.efiSupport = true;
-		grub.device = "nodev";
-	};
+  # Bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 
-	# networking configuration
-	networking = {
-		hostName = "nixos-desktop";
-		networkmanager.enable = true;
-		# wireless.enable = true; DOES NOT WORK (with KDE?)
-	};
+  # Time
+  time.timeZone = "America/Chicago";
 
-	hardware.bluetooth = {
-		enable = true;
-		powerOnBoot = true;
-	};
+  # User
+  users.users.aryan = {
+    isNormalUser = true;
+    description = "Aryan";
+    extraGroups = [ "networkmanager" "wheel" "video" ];
+    shell = pkgs.fish;
+  };
 
-	# user configuration
-	users.users.aryan = {
-		isNormalUser = true;
-		description = "Aryan";
-		extraGroups = [ "networkmanager" "wheel" "video" ];
-		shell = pkgs.fish;
-	};
-	programs.fish.enable = true;
+  # Fish shell
+  programs.fish.enable = true;
 
-	# packages installed at the system level
-	environment.systemPackages = with pkgs; [ firefox git vim wl-clipboard clipse gnome-keyring nautilus ];
+  # Hyprland
+  programs.hyprland.enable = true;
 
-	# enable sddm login manager with kde plasma and hyprland
-	#services.displayManager.sddm = {
-	#	enable = true;
-	#	wayland.enable = true;
-	#};
-	services.displayManager.gdm = {
-		enable = true;
-		wayland = true;
-	};
-	# services.desktopManager.plasma6.enable = true;
-	# services.xserver.displayManager.gdm.enable = true;
-	programs.hyprland.enable = true;
-	services.upower.enable = true;
-	services.power-profiles-daemon.enable = true;
-	# Enable sound with pipewire.
-	# services.pulseaudio.enable = false;
-	security.rtkit.enable = true;
-	services.blueman.enable = false;
-	security.polkit.enable = true;
-	services.pipewire = {
-		enable = true;
-		alsa.enable = true;
-		alsa.support32Bit = true;
-		pulse.enable = true;
-		jack.enable = true;
-		wireplumber.enable = true;
-	};
+  # Display manager (simple text login)
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+      user = "greeter";
+    };
+  };
 
-	# miscellaneous configuration
-	time.timeZone = "America/Chicago";
-	services.openssh.enable = true;
-	services.printing.enable = true;
-	programs.gnupg.agent.enable = true;
+  # Audio
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
-	# install fonts
-	fonts.packages = with pkgs; [ noto-fonts jetbrains-mono font-awesome nerd-fonts._0xproto material-icons nerd-fonts.fira-code nerd-fonts.dejavu-sans-mono dejavu_fonts];
+  # Graphics
+  hardware.graphics.enable = true;
 
-	system.stateVersion = "25.11";
+  # Polkit
+  security.polkit.enable = true;
+
+  # Printing
+  services.printing.enable = true;
+
+  # BAREBONES packages
+  environment.systemPackages = with pkgs; [
+    ghostty
+    git
+    neovim
+    nano
+    pavucontrol
+
+  ];
+
+  fonts.packages = with pkgs; [ jetbrains-mono ];
+  
+  system.stateVersion = "25.11";
 }
-
