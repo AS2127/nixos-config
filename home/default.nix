@@ -36,6 +36,7 @@
 	btop
 	fzf
 	wget
+	tree
   ];
 
   home.stateVersion = "25.05";
