@@ -1,7 +1,16 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, lib, ... }: {
+  imports = [ 
+  	./neovim
+	./apps
+  ];
+
   home = {
     username = "aryan";
     homeDirectory = "/home/aryan";
+  };
+
+  neovim = {
+  	enable = true;
   };
 
   # Git config
@@ -25,19 +34,6 @@
   # Ghostty terminal
   programs.ghostty.enable = true;
 
-  # Empty packages - add them yourself as you learn!
-  home.packages = with pkgs; [
-	firefox
-	kdePackages.dolphin
-	hyprlauncher
-	vesktop
-	youtube-music
-	htop
-	btop
-	fzf
-	wget
-	tree
-  ];
-
+  
   home.stateVersion = "25.05";
 }
