@@ -1,7 +1,7 @@
 { pkgs, inputs, lib, ... }: {
   imports = [ 
   	./neovim
-	./apps
+	./apps.nix
   ];
 
   home = {
