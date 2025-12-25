@@ -8,6 +8,11 @@
 
   ];
 
+  	environment.variables = {
+		XCURSOR_THEME = "Oxygen-17-Black";
+		XCURSOR_SIZE = "24";
+	};
+
 	fonts.packages = with pkgs; [ jetbrains-mono google-fonts ];
 
 	}
