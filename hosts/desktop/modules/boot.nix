@@ -6,6 +6,7 @@
       efiSupport = true;
       useOSProber = true;
       device = "nodev";
+	  timeout = -1;
     };
   };
 

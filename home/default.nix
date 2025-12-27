@@ -9,6 +9,21 @@
     homeDirectory = "/home/aryan";
   };
 
+
+  gtk = {
+	  enable = true;
+
+	  cursorTheme = {
+		  name = "Oxygen-17-Black";
+		  size = 24;
+	  };
+  };
+
+  qt = {
+		enable = true;
+		platformTheme.name = "gtk";
+  };
+
   neovim = {
   	enable = true;
   };

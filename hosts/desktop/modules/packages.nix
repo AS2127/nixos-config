@@ -5,6 +5,9 @@
     	neovim
     	nano
     	pavucontrol
+		adwaita-icon-theme
+		papirus-icon-theme
+		hicolor-icon-theme
 
   ];
 
