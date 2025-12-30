@@ -4,6 +4,7 @@
 		./neovim
 		./hyprland
 		./waybar
+		./fish
 	];
 
 	home = {
@@ -56,7 +57,6 @@
 		grim
 		slurp
 		swappy
-		wofi
 		networkmanager_dmenu
 		hyprpaper
 		inputs.clipse-gui.packages.${pkgs.system}.default
@@ -75,6 +75,7 @@
 		starship
 		matugen
 		pavucontrol
+		wofi
 
 	];
 

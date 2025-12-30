@@ -7,7 +7,7 @@
 		settings.auto-optimise-store = true;
 	};
 	nixpkgs.config.allowUnfree = true; # allow closed source software
-	nixpkgs.config.permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-57-6.12.42" "broadcom-sta-6.30.223.271-57-6.12.51" "broadcom-sta-6.30.223.271-57-6.12.54" "broadcom-sta-6.30.223.271-57-6.12.55" ];
+	nixpkgs.config.permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-57-6.12.42" "broadcom-sta-6.30.223.271-57-6.12.51" "broadcom-sta-6.30.223.271-57-6.12.54" "broadcom-sta-6.30.223.271-57-6.12.55" "broadcom-sta-6.30.223.271-59-6.12.62" "broadcom-sta-6.30.223.271-59-6.12.63" ];
 	nixpkgs.config.allowBroken = true;
 
 	# enable nix commands flakes
@@ -22,6 +22,12 @@
 		efi.canTouchEfiVariables = true;
 		grub.efiSupport = true;
 		grub.device = "nodev";
+		grub.configurationLimit = 3;
+		grub.minegrub-world-sel = {
+			enable = true;
+			customIcons = [];
+
+		};
 	};
 
 
@@ -59,7 +65,7 @@
 	programs.fish.enable = true;
 
 	# packages installed at the system level
-	environment.systemPackages = with pkgs; [ firefox git vim wl-clipboard clipse gnome-keyring nautilus];
+	environment.systemPackages = with pkgs; [ firefox git vim wl-clipboard clipse gnome-keyring nautilus hyprlauncher];
 
 	# enable sddm login manager with kde plasma and hyprland
 	#services.displayManager.sddm = {

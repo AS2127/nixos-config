@@ -29,6 +29,12 @@
 			url = "github:nix-community/neovim-nightly-overlay";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+		minegrub-world-sel-theme = {
+			url = "github:Lxtharia/minegrub-world-sel-theme";
+			inputs.nixpkgs.follows = "nixpkgs";
+
+		};
 	};
 
 	outputs = inputs @ { nixpkgs, home-manager, ... }: {
@@ -38,6 +44,7 @@
 				specialArgs = { inherit inputs; };
 				modules = [
 					./hosts/laptop/configuration.nix
+					inputs.minegrub-world-sel-theme.nixosModules.default
 					home-manager.nixosModules.home-manager {
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
